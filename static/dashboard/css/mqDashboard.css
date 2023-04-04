@@ -1,0 +1,21 @@
+@media (max-width: 1024px) {
+  .dashboard__graphicsAndAlert {
+    flex-direction: column;
+  }
+
+  .graphicsAndAlert__alert {
+    width: 100%;
+    min-height: 400px;
+  }
+
+  .graphicsAndAlert__graphics {
+    width: 100%;
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 768px) {
+  .graphicsAndAlert__graphics {
+    flex-direction: column;
+  }
+}

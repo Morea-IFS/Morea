@@ -1,0 +1,34 @@
+.header__divOptionsMenuMobile,
+.header__labelMenuMobile {
+  display: none;
+}
+
+#header__chekboxMenuMobile {
+  display: none;
+}
+
+#header__chekboxMenuMobile:checked + .header__divOptionsMenuMobile {
+  height: var(--height-menuMobile);
+  justify-content: center;
+  border-bottom: 1px solid var(--border-trasparent);
+}
+
+#header__chekboxMenuMobile:checked
+  + .header__divOptionsMenuMobile
+  .header__options {
+  transform: translateX(0) !important;
+}
+
+@media (max-width: 568px) {
+  .header {
+    justify-content: space-between;
+  }
+
+  .header__divOptionsMenuDesktop {
+    display: none;
+  }
+  .header__divOptionsMenuMobile,
+  .header__labelMenuMobile {
+    display: block;
+  }
+}
