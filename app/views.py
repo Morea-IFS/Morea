@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from app.models import Data
-from .statistics.graphic import addDatasInDatasPD, createDataFrame
+from .statistics.graphic import addDatasInDatasPD, createDataFrame, addGraphicsInHTML
+
 
 def home(request):
     return render(request, 'home/home.html')
@@ -18,7 +19,12 @@ def dashboard(request):
 
     createDataFrame(datasPD)
 
-    return render(request, 'dashboard/dashboard.html', {'datas': datas})
+    objectDatasHTML = addGraphicsInHTML()
+
+    return render(request, 'dashboard/dashboard.html', {
+        'listPathsHTML': objectDatasHTML[0],
+        'listNamesFilesHTML': objectDatasHTML[1]
+    })
 
 
 def updates(request):

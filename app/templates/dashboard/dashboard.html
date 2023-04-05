@@ -59,30 +59,24 @@
           <div class="titleDiv__selectDiv">
 
             <select class="titleDiv__selectElement" name="selectRawDatas" id="selectRawDatas">
-              <option disabled>Selecione</option>
-              <option selected value="dashboardRawDatas__water">Água</option>
-              <option value="dashboardRawDatas__energy">Energia</option>
+              <option disabled selected>Selecione</option>
             </select>
 
           </div>
         </div>
         <div class="graphicsDiv__graphicDiv">
 
+        {% for iframePath in listPathsHTML %}
+
           <iframe 
-            class="graphicDiv_graphicIframe disabledGraphic enableGraphic" 
-            id="dashboardRawDatas__water"
-            src="{% static 'graphics/dashboard/graphic_line_water.html' %}"
+            class="graphicDiv_graphicIframe disabledGraphic"
+            id="{{ listNamesFilesHTML|index:forloop.counter0 }}"
+            src="{% static iframePath %}"
             frameborder="0"
             >
           </iframe>
-
-          <iframe 
-          class="graphicDiv_graphicIframe disabledGraphic" 
-          id="dashboardRawDatas__energy"
-          src="{% static 'graphics/dashboard/graphic_line_energy.html' %}"
-          frameborder="0"
-          >
-        </iframe>
+    
+        {% endfor %}
 
         </div>
       </div>
