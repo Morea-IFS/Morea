@@ -9,10 +9,14 @@ iframes.map((iframe) => {
   arrayIdsRawDatas.push(iframe.id);
 });
 
-arrayIdsRawDatas.map((id) => {
+arrayIdsRawDatas.map((id, index) => {
   const option = document.createElement("option");
   option.value = id;
   option.textContent = id;
+  if (index === 0) {
+    console.log(id);
+    option.setAttribute("selected", true);
+  }
   arraySelectsElement[1].appendChild(option);
 });
 

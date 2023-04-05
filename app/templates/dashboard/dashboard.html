@@ -68,13 +68,25 @@
 
         {% for iframePath in listPathsHTML %}
 
-          <iframe 
+          {% if forloop.counter0 == 0 %}
+            <iframe 
+            class="graphicDiv_graphicIframe disabledGraphic enableGraphic"
+            id="{{ listNamesFilesHTML|index:forloop.counter0 }}"
+            src="{% static iframePath %}"
+            frameborder="0"
+            >
+            </iframe>
+          {% else %}
+            
+            <iframe 
             class="graphicDiv_graphicIframe disabledGraphic"
             id="{{ listNamesFilesHTML|index:forloop.counter0 }}"
             src="{% static iframePath %}"
             frameborder="0"
             >
-          </iframe>
+            </iframe>
+
+          {% endif %}
     
         {% endfor %}
 
