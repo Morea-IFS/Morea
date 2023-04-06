@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from app.models import Data
+from app.models import Data, Motes
 from .statistics.graphic import addDatasInDatasPD, createDataFrame, addGraphicsInHTML
 
 
@@ -42,7 +42,9 @@ def api(request):
         localColeta = request.GET['localColeta']
         nodeID = request.GET['nodeID']
 
-        coletas = Data(mote=nodeID, last_collection=consumoAtual,
+        moteID = Motes.objects.get(id=nodeID)
+
+        coletas = Data(mote=moteID, last_collection=consumoAtual,
                        total=consumoTotal)
         coletas.save()
 

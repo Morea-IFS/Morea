@@ -19,4 +19,4 @@ class Data(models.Model):
     last_collection = models.FloatField(
         default=0)  # Litros/Hora no último minuto
     total = models.FloatField(default=0)  # Listros totais
-    collect_date = models.DateTimeField()  # Data de coleta
+    collect_date = models.DateTimeField(auto_now_add=True)  # Data de coleta
