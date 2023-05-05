@@ -1,0 +1,123 @@
+.home__content {
+    max-width: none;
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: calc(100vh - var(--height-header) - var(--height-footer));
+    text-align: start;
+}
+
+.sectionApresentation {
+    display: flex;
+    gap: 30px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: var(--color-main);
+    padding: 20px 0;
+    background-color: var(--color-blue);
+}
+
+.textsApresentation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.textsApresentation h1 {
+    font-size: clamp(2em, 2vw, 2.2em);
+}
+
+.textsApresentation p {
+    font-size: clamp(1em, 2vw, 1.2em);
+    max-width: 500px;
+}
+
+.buttonMore {
+    display: flex;
+    background: var(--color-white25);
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: var(--color-main);
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all .3s ease;
+    font-weight: 600;
+    align-self: flex-start;
+}
+
+.buttonMore:hover {
+    transform: translateY(-5px);
+}
+
+.imageApresentation {
+    width: 300px;
+}
+
+.textWhatMorea {
+    padding: 40px 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: clamp(1.7em, 2vw, 1.8em);
+    color: var(--color-textBlack);
+}
+
+.containerMinAboutMorea {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 0 20px 0;
+    width: 100%;
+    max-width: 1000px;
+    color: var(--color-textDefault);
+    text-align: justify;
+}
+
+.containerMinAboutMorea span {
+    font-weight: 600;
+    color: var(--color-textBlack);
+}
+
+.divTextOne {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.containerMinAboutMorea p {
+    font-size: clamp(0.8em, 2vw, 1em);
+}
+
+.divTextTwo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.divTextTwo h2 {
+    color: var(--color-textBlack);
+}
+
+.tecnologyDivItens {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.row--reverse {
+    flex-direction: row-reverse;
+}
