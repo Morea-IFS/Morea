@@ -22,7 +22,7 @@
     width: 100%;
     height: 100%;
     color: var(--color-main);
-    padding: 20px 0;
+    padding: 20px 30px;
     background-color: var(--color-blue);
 }
 
@@ -34,11 +34,11 @@
 }
 
 .textsApresentation h1 {
-    font-size: clamp(2em, 2vw, 2.2em);
+    font-size: clamp(1.8em, 2vw, 2.2em);
 }
 
 .textsApresentation p {
-    font-size: clamp(1em, 2vw, 1.2em);
+    font-size: clamp(0.9em, 2vw, 1.2em);
     max-width: 500px;
 }
 
@@ -52,7 +52,7 @@
     color: var(--color-main);
     margin-top: 20px;
     cursor: pointer;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
     font-weight: 600;
     align-self: flex-start;
 }
@@ -62,7 +62,8 @@
 }
 
 .imageApresentation {
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
 }
 
 .textWhatMorea {
@@ -79,7 +80,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 0 0 20px 0;
+    padding: 0 30px 30px 30px;
     width: 100%;
     max-width: 1000px;
     color: var(--color-textDefault);
@@ -98,7 +99,7 @@
 }
 
 .containerMinAboutMorea p {
-    font-size: clamp(0.8em, 2vw, 1em);
+    font-size: clamp(0.9em, 2vw, 1em);
 }
 
 .divTextTwo {
@@ -120,4 +121,26 @@
 
 .row--reverse {
     flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+    .sectionApresentation {
+        flex-direction: column;
+        gap: 0px;
+        padding: 30px;
+    }
+
+    .textsApresentation {
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .buttonMore {
+        align-self: center;
+    }
+
+    .tecnologyDivItens {
+        flex-direction: column;
+    }
 }
