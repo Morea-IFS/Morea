@@ -19,6 +19,10 @@ body {
   --background-abnormalConsumption: #e2b203;
   --color-main: #ffffff;
   --color-blue: #0b98e3;
+  --color-white25: #091e420f;
   --color-textDefault: #172b4d;
+  --color-textBlack: #091529;
   --border-trasparent: #172b4d28;
+  --height-header: 50px;
+  --height-footer: 70px;
 }
