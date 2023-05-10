@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from app.models import Data, Motes
 from .statistics.graphic import addDatasInDatasPD, createDataFrame, addGraphicsInHTML
@@ -51,3 +52,30 @@ def api(request):
         print(consumoAtual, consumoTotal, localColeta, nodeID)
 
     return render(request, 'api.html')
+
+
+def returnGraphic(request, typeMote, moteId):
+
+    if moteId < 10:
+        moteId = f'0{moteId}'
+
+    if typeMote == "energy":
+        return render(request, f'graphics/dashboard/energy/Emote{moteId}.html')
+    elif typeMote == "water":
+        return render(request, f'graphics/dashboard/water/Wmote{moteId}.html')
+    else:
+        pass
+
+
+def graphics(request, **kwargs):
+
+    if kwargs.get('emote_id'):
+        moteId = kwargs.get('emote_id')
+        return returnGraphic(request, 'energy', moteId)
+
+    elif kwargs.get('wmote_id'):
+        moteId = kwargs.get('wmote_id')
+        return returnGraphic(request, 'water', moteId)
+
+    else:
+        pass

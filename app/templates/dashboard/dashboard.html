@@ -72,7 +72,7 @@
             <iframe 
             class="graphicDiv_graphicIframe disabledGraphic enableGraphic"
             id="{{ listNamesFilesHTML|index:forloop.counter0 }}"
-            src="{% static iframePath %}"
+            src="{{ iframePath }}"
             frameborder="0"
             >
             </iframe>
@@ -82,7 +82,7 @@
             <iframe 
             class="graphicDiv_graphicIframe disabledGraphic"
             id="{{ listNamesFilesHTML|index:forloop.counter0 }}"
-            src="{% static iframePath %}"
+            src="{{ iframePath }}"
             frameborder="0"
             >
             </iframe>
