@@ -48,7 +48,6 @@ def createDataFrame(objectDatas):
     for energyItems in objectDatas[typeEnergy].items():
         dataFrameCreateEnergy = pd.DataFrame(
             {'Data': energyItems[getArrayDatas][getDatesInArrayDatas], 'Valor': energyItems[getArrayDatas][getValuesInArrayDatas]})
-
         createPlotly(dataFrameCreateEnergy, energyItems[getNameMote])
 
     for waterItems in objectDatas[typeWater].items():
@@ -87,7 +86,7 @@ def createPlotly(arrayToPlotly, nameToFileCreate):
         )
 
         createPlotly.write_html(
-            f"static/graphics/dashboard/energy/{nameToFileCreate}.html")
+            f"app/templates/graphics/dashboard/energy/{nameToFileCreate}.html")
 
     elif nameToFileCreate[0] in 'Ww':
         createPlotly = go.Figure(go.Scatter(
@@ -110,23 +109,22 @@ def createPlotly(arrayToPlotly, nameToFileCreate):
         )
 
         createPlotly.write_html(
-            f"static/graphics/dashboard/water/{nameToFileCreate}.html")
+            f"app/templates/graphics/dashboard/water/{nameToFileCreate}.html")
     else:
         pass
 
 
 def addGraphicsInHTML():
     searchHTMLFiles = glob.glob(
-        'static/graphics/dashboard/**/*.html', recursive=True)
+        'app/templates/graphics/dashboard/**/*.html', recursive=True)
 
     arrayPathForIframes = []
     arrayNameForHTML = []
 
     for HTMLFile in searchHTMLFiles:
-        HTMLPath = HTMLFile.replace('static/', '')
-        HTMLFileName = os.path.basename(HTMLPath)
-        HTMLFileName = HTMLFileName.replace('.html', '')
-        arrayPathForIframes.append(HTMLPath)
+        HTMLPath = os.path.basename(HTMLFile).replace('.html', '')
+        HTMLFileName = HTMLPath
+        arrayPathForIframes.append(f'/{HTMLPath}')
         arrayNameForHTML.append(HTMLFileName)
 
     return [arrayPathForIframes, arrayNameForHTML]
