@@ -18,8 +18,3 @@ jobs:
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
           server-dir: files/Morea/
-
-      - name: 🔨 Build Project
-        run: |
-          source files/Morea/env/bin/activate
-          python3 manage.py migrate
