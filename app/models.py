@@ -23,3 +23,15 @@ class Data(models.Model):
         default=0)  # Litros/Hora no último minuto
     total = models.FloatField(default=0)  # Listros totais
     collect_date = models.DateTimeField(auto_now_add=True)  # Data de coleta
+
+
+class StatsMin(models.Model):
+    mote = models.ForeignKey(Motes, on_delete=models.CASCADE, default=0)
+    mean = models.FloatField()
+    median = models.FloatField()
+    std = models.FloatField()
+    cv = models.FloatField()
+    max = models.FloatField()
+    min = models.FloatField()
+    fq = models.FloatField()
+    tq = models.FloatField()
