@@ -37,19 +37,28 @@ def about(request):
 
 
 def api(request):
+    secretKeyConst = '7$WMX70b9$#9'
+
     if request.method == 'GET':
-        consumoAtual = request.GET['consumoAtual']
-        consumoTotal = request.GET['consumoTotal']
-        localColeta = request.GET['localColeta']
-        nodeID = request.GET['nodeID']
+        secretKey = request.GET['secretKey']
 
-        moteID = Motes.objects.get(id=nodeID)
+        if (secretKey == secretKeyConst):
+            nodeID = request.GET['nodeID']
+            consumoAtual = request.GET['consumoAtual']
 
-        coletas = Data(mote=moteID, last_collection=consumoAtual,
-                       total=consumoTotal)
-        coletas.save()
-
-        print(consumoAtual, consumoTotal, localColeta, nodeID)
+            moteID = Motes.objects.get(id=nodeID)
+            totalCollections = list(
+                Data.objects.values_list('total').order_by("id").filter(mote=moteID).reverse())
+            if (Data.objects.filter(id=nodeID).exists()):
+                totalCollectionsData = totalCollections[0][0] + \
+                    float(consumoAtual)
+                coletas = Data(mote=moteID, last_collection=consumoAtual,
+                               total=totalCollectionsData)
+                coletas.save()
+            else:
+                coletas = Data(mote=moteID, last_collection=consumoAtual,
+                               total=consumoAtual)
+                coletas.save()
 
     return render(request, 'api.html')
 
