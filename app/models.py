@@ -13,6 +13,9 @@ class Motes(models.Model):
     section = models.CharField(max_length=255, null=False)
     location = models.CharField(max_length=255, null=False)
 
+    def __str__(self):
+        return self.name
+
 
 class Data(models.Model):
     mote = models.ForeignKey(Motes, on_delete=models.CASCADE, default=0)
