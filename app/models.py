@@ -25,13 +25,13 @@ class Data(models.Model):
     collect_date = models.DateTimeField(auto_now_add=True)  # Data de coleta
 
 
-class StatsMin(models.Model):
+class StatsHour(models.Model):
     mote = models.ForeignKey(Motes, on_delete=models.CASCADE, default=0)
-    mean = models.FloatField()
-    median = models.FloatField()
-    std = models.FloatField()
-    cv = models.FloatField()
-    max = models.FloatField()
-    min = models.FloatField()
-    fq = models.FloatField()
-    tq = models.FloatField()
+    mean = models.FloatField(default=0)
+    median = models.FloatField(default=0)
+    std = models.FloatField(default=0)
+    cv = models.FloatField(default=0)
+    max = models.FloatField(default=0)
+    min = models.FloatField(default=0)
+    fq = models.FloatField(default=0)
+    tq = models.FloatField(default=0)
