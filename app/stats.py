@@ -1,12 +1,16 @@
 from app.models import Motes, Data, StatsHour
 from django.utils import timezone
 from datetime import timedelta
+from .statistics.graphic import mainGraphics
 import numpy
 
 
 def run():
     oneHourCounter = timezone.now() - timedelta(hours=1)
-    wMotes = Motes.objects.values_list('id').filter(type=1)
+    wMotes = Motes.objects.values_list('id')
+
+    mean1h1 = StatsHour.objects.select_related('mote').all().filter(
+        created_at__gte=oneHourCounter)
 
     for mote in wMotes:
         try:
@@ -27,3 +31,6 @@ def run():
             stats.save()
         except:
             pass
+
+    mainGraphics(mean1h1, "app/templates/graphics/dashboard/mean1h1",
+                 "app/templates/graphics/dashboard/mean1h1", "1h1mean")

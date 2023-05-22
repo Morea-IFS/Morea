@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from app.models import Data, Motes
-from .statistics.graphic import addDatasInDatasPD, createDataFrame, addGraphicsInHTML
+from .statistics.graphic import addDatasInDatasPD, createDataFrame, addGraphicsInHTML, mainGraphics
 
 
 def home(request):
@@ -9,22 +9,14 @@ def home(request):
 
 
 def dashboard(request):
-    datas = Data.objects.select_related('mote').all()
+    datasRaw = Data.objects.select_related('mote').all()
 
-    datasPD = {
-        'energy': {},
-        'water': {}
-    }
-
-    addDatasInDatasPD(datas, datasPD)
-
-    createDataFrame(datasPD)
-
-    objectDatasHTML = addGraphicsInHTML()
+    rawGraphics = mainGraphics(datasRaw, "app/templates/graphics/dashboard/rawDatas",
+                               "app/templates/graphics/dashboard/rawDatas", "raw")
 
     return render(request, 'dashboard/dashboard.html', {
-        'listPathsHTML': objectDatasHTML[0],
-        'listNamesFilesHTML': objectDatasHTML[1]
+        'listPathsHTML': rawGraphics[0],
+        'listNamesFilesHTML': rawGraphics[1]
     })
 
 
@@ -69,9 +61,9 @@ def returnGraphic(request, typeMote, moteId):
         moteId = f'0{moteId}'
 
     if typeMote == "energy":
-        return render(request, f'graphics/dashboard/energy/Emote{moteId}.html')
+        return render(request, f'graphics/dashboard/rawDatas/energy/Emote{moteId}.html')
     elif typeMote == "water":
-        return render(request, f'graphics/dashboard/water/Wmote{moteId}.html')
+        return render(request, f'graphics/dashboard/rawDatas/water/Wmote{moteId}.html')
     else:
         pass
 

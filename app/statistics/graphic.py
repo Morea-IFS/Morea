@@ -4,40 +4,93 @@ import glob
 import os
 
 
-def addDatasInDatasPD(objectRequestDB, objectDatasPD):
+def addDatasInDatasPD(objectRequestDB, typeGraphic):
+
+    objectDatasPD = {
+        'energy': {},
+        'water': {}
+    }
+
     for data in objectRequestDB:
-        dataMoteName = data.mote.name
-        dataCollectDate = data.collect_date
-        dataLastCollection = data.last_collection
 
         if data.mote.get_type_display() == 'EMote':
 
-            try:
-                objectDatasPD['energy'][dataMoteName] = [[* objectDatasPD['energy'][dataMoteName][0],
-                                                          dataCollectDate], [* objectDatasPD['energy'][dataMoteName][1], dataLastCollection]]
-            except:
-                objectDatasPD['energy'][dataMoteName] = [[], []]
-                objectDatasPD['energy'][dataMoteName][0].append(
-                    dataCollectDate)
-                objectDatasPD['energy'][dataMoteName][1].append(
-                    dataLastCollection)
+            if typeGraphic == "raw":
+
+                dataMoteName = data.mote.name
+                dataCollectDate = data.collect_date
+                dataLastCollection = data.last_collection
+
+                try:
+
+                    objectDatasPD['energy'][dataMoteName] = [[* objectDatasPD['energy'][dataMoteName][0],
+                                                              dataCollectDate], [* objectDatasPD['energy'][dataMoteName][1], dataLastCollection]]
+                except:
+                    objectDatasPD['energy'][dataMoteName] = [[], []]
+                    objectDatasPD['energy'][dataMoteName][0].append(
+                        dataCollectDate)
+                    objectDatasPD['energy'][dataMoteName][1].append(
+                        dataLastCollection)
+
+            elif typeGraphic == "1h1mean":
+
+                mean = data.mean
+                dataMoteName = data.mote.name
+                dateMean = data.created_at
+
+                try:
+
+                    objectDatasPD['energy'][dataMoteName] = [[* objectDatasPD['energy'][dataMoteName][0],
+                                                              dateMean], [* objectDatasPD['energy'][dataMoteName][1], mean]]
+                except:
+                    objectDatasPD['energy'][dataMoteName] = [[], []]
+                    objectDatasPD['energy'][dataMoteName][0].append(
+                        dateMean)
+                    objectDatasPD['energy'][dataMoteName][1].append(
+                        mean)
 
         elif data.mote.get_type_display() == 'WMote':
 
-            try:
-                objectDatasPD['water'][dataMoteName] = [[* objectDatasPD['water'][dataMoteName][0],
-                                                         dataCollectDate], [* objectDatasPD['water'][dataMoteName][1], dataLastCollection]]
-            except:
-                objectDatasPD['water'][dataMoteName] = [[], []]
-                objectDatasPD['water'][dataMoteName][0].append(dataCollectDate)
-                objectDatasPD['water'][dataMoteName][1].append(
-                    dataLastCollection)
+            if typeGraphic == "raw":
+
+                dataMoteName = data.mote.name
+                dataCollectDate = data.collect_date
+                dataLastCollection = data.last_collection
+
+                try:
+                    objectDatasPD['water'][dataMoteName] = [[* objectDatasPD['water'][dataMoteName][0],
+                                                            dataCollectDate], [* objectDatasPD['water'][dataMoteName][1], dataLastCollection]]
+                except:
+                    objectDatasPD['water'][dataMoteName] = [[], []]
+                    objectDatasPD['water'][dataMoteName][0].append(
+                        dataCollectDate)
+                    objectDatasPD['water'][dataMoteName][1].append(
+                        dataLastCollection)
+
+            elif typeGraphic == "1h1mean":
+
+                mean = data.mean
+                dataMoteName = data.mote.name
+                dateMean = data.created_at
+
+                try:
+
+                    objectDatasPD['water'][dataMoteName] = [[* objectDatasPD['water'][dataMoteName][0],
+                                                             dateMean], [* objectDatasPD['water'][dataMoteName][1], mean]]
+                except:
+                    objectDatasPD['water'][dataMoteName] = [[], []]
+                    objectDatasPD['water'][dataMoteName][0].append(
+                        dateMean)
+                    objectDatasPD['water'][dataMoteName][1].append(
+                        mean)
 
         else:
             pass
 
+    return objectDatasPD
 
-def createDataFrame(objectDatas):
+
+def createDataFrame(objectDatas, pathToCreateArchive):
     typeEnergy = 'energy'
     typeWater = 'water'
     getNameMote = 0
@@ -46,18 +99,22 @@ def createDataFrame(objectDatas):
     getValuesInArrayDatas = 1
 
     for energyItems in objectDatas[typeEnergy].items():
+
         dataFrameCreateEnergy = pd.DataFrame(
             {'Data': energyItems[getArrayDatas][getDatesInArrayDatas], 'Valor': energyItems[getArrayDatas][getValuesInArrayDatas]})
-        createPlotly(dataFrameCreateEnergy, energyItems[getNameMote])
+
+        createPlotly(dataFrameCreateEnergy,
+                     energyItems[getNameMote], pathToCreateArchive)
 
     for waterItems in objectDatas[typeWater].items():
         dataFrameCreateWater = pd.DataFrame(
             {'Data': waterItems[getArrayDatas][getDatesInArrayDatas], 'Valor': waterItems[getArrayDatas][getValuesInArrayDatas]})
 
-        createPlotly(dataFrameCreateWater, waterItems[getNameMote])
+        createPlotly(dataFrameCreateWater,
+                     waterItems[getNameMote], pathToCreateArchive)
 
 
-def createPlotly(arrayToPlotly, nameToFileCreate):
+def createPlotly(arrayToPlotly, nameToFileCreate, pathToCreateFile):
 
     templateHoverWater = '<i>Data</i>: %{x}' + \
         '<br><i>Consumo(L)</i>: %{y:.1f}L <extra></extra>'
@@ -86,7 +143,7 @@ def createPlotly(arrayToPlotly, nameToFileCreate):
         )
 
         createPlotly.write_html(
-            f"app/templates/graphics/dashboard/energy/{nameToFileCreate}.html")
+            f"{pathToCreateFile}/energy/{nameToFileCreate}.html")
 
     elif nameToFileCreate[0] in 'Ww':
         createPlotly = go.Figure(go.Scatter(
@@ -109,14 +166,14 @@ def createPlotly(arrayToPlotly, nameToFileCreate):
         )
 
         createPlotly.write_html(
-            f"app/templates/graphics/dashboard/water/{nameToFileCreate}.html")
+            f"{pathToCreateFile}/water/{nameToFileCreate}.html")
     else:
         pass
 
 
-def addGraphicsInHTML():
+def addGraphicsInHTML(pathSearchArchives):
     searchHTMLFiles = glob.glob(
-        'app/templates/graphics/dashboard/**/*.html', recursive=True)
+        f'{pathSearchArchives}/**/*.html', recursive=True)
 
     arrayPathForIframes = []
     arrayNameForHTML = []
@@ -128,3 +185,9 @@ def addGraphicsInHTML():
         arrayNameForHTML.append(HTMLFileName)
 
     return [arrayPathForIframes, arrayNameForHTML]
+
+
+def mainGraphics(datas, pathToCreateArchive, pathToSearchArquives, typeGraphic):
+    datasInPd = addDatasInDatasPD(datas, typeGraphic)
+    dataFrame = createDataFrame(datasInPd, pathToCreateArchive)
+    return addGraphicsInHTML(pathToSearchArquives)
