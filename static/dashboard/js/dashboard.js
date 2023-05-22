@@ -1,24 +1,45 @@
-const selectsElement = document.querySelectorAll(".titleDiv__selectElement");
-const arraySelectsElement = Array.from(selectsElement);
-const iframes = Array.from(
-  document.querySelectorAll(".graphicDiv_graphicIframe")
+const arraySelectsElement = Array.from(
+  document.querySelectorAll(".titleDiv__selectElement")
 );
-const arrayIdsRawDatas = [];
 
-iframes.map((iframe) => {
-  arrayIdsRawDatas.push(iframe.id);
-});
- 
-arrayIdsRawDatas.map((id, index) => {
-  const option = document.createElement("option");
-  option.value = id;
-  option.textContent = id;
-  if (index === 0) {
-    console.log(id);
-    option.setAttribute("selected", true);
-  }
-  arraySelectsElement[1].appendChild(option);
-});
+const iframesRaw = Array.from(
+  document.querySelectorAll(".graphicDiv_graphicIframeRaw")
+);
+
+const iframesM1h1 = Array.from(
+  document.querySelectorAll(".graphicDiv_graphicIframeM1h1")
+);
+
+const arrayIdsRawDatas = [];
+const arrayIds1h1Datas = [];
+
+const addIdIframesInArray = (arrayIframes, arrayId) => {
+  arrayIframes.map((iframe) => {
+    arrayId.push(iframe.id);
+  });
+}
+
+
+addIdIframesInArray(iframesRaw, arrayIdsRawDatas)
+addIdIframesInArray(iframesM1h1, arrayIds1h1Datas)
+
+
+const addOptions = (arrayForMap, elementSelect) => {
+  arrayForMap.map((id, index) => {
+    const option = document.createElement("option");
+    const nameOption = id.split("-");
+    option.value = id;
+    option.textContent = nameOption[nameOption.length - 1];
+    if (index === 0) {
+      option.setAttribute("selected", true);
+    }
+    elementSelect.appendChild(option);
+  });
+}
+
+addOptions(arrayIds1h1Datas, arraySelectsElement[0])
+addOptions(arrayIdsRawDatas, arraySelectsElement[1])
+
 
 // DECLARAR ARRAY COM OS IDS PARA OS GRAFICOS DE DETERMINADO SLOT
 
@@ -35,5 +56,6 @@ const toggleGraphic = (classArray, selectElement) => {
 };
 
 addEventListener("change", () => {
+  toggleGraphic(arrayIds1h1Datas, arraySelectsElement[0]);
   toggleGraphic(arrayIdsRawDatas, arraySelectsElement[1]);
 });

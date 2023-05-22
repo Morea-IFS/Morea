@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from app.models import Data, Motes
-from .statistics.graphic import addDatasInDatasPD, createDataFrame, addGraphicsInHTML
+from .statistics.graphic import addDatasInDatasPD, createDataFrame, addGraphicsInHTML, mainGraphics
 
 
 def home(request):
@@ -9,22 +9,17 @@ def home(request):
 
 
 def dashboard(request):
-    datas = Data.objects.select_related('mote').all()
+    datasRaw = Data.objects.select_related('mote').all()
 
-    datasPD = {
-        'energy': {},
-        'water': {}
-    }
+    rawGraphics = mainGraphics(datasRaw, "app/templates/graphics/dashboard/rawDatas",
+                               "app/templates/graphics/dashboard/rawDatas", "raw")
+    
+    mean1h1Graphics = addGraphicsInHTML("app/templates/graphics/dashboard/mean1h1")
 
-    addDatasInDatasPD(datas, datasPD)
-
-    createDataFrame(datasPD)
-
-    objectDatasHTML = addGraphicsInHTML()
 
     return render(request, 'dashboard/dashboard.html', {
-        'listPathsHTML': objectDatasHTML[0],
-        'listNamesFilesHTML': objectDatasHTML[1]
+        'listPathsHTML': {"raw": rawGraphics[0], "m1h1": mean1h1Graphics[0]},
+        'listNamesFilesHTML': {"raw": rawGraphics[1], "m1h1": mean1h1Graphics[1]}
     })
 
 
@@ -63,28 +58,11 @@ def api(request):
     return render(request, 'api.html')
 
 
-def returnGraphic(request, typeMote, moteId):
-
-    if moteId < 10:
-        moteId = f'0{moteId}'
-
-    if typeMote == "energy":
-        return render(request, f'graphics/dashboard/energy/Emote{moteId}.html')
-    elif typeMote == "water":
-        return render(request, f'graphics/dashboard/water/Wmote{moteId}.html')
-    else:
-        pass
-
-
 def graphics(request, **kwargs):
 
-    if kwargs.get('emote_id'):
-        moteId = kwargs.get('emote_id')
-        return returnGraphic(request, 'energy', moteId)
+    requestPathGraphic = kwargs.get('path_graphic_mote')
+    pathGraphic = str(requestPathGraphic).replace('-', '/').replace('/em', '/Em').replace('/wm', '/Wm')
+    
+    
+    return render(request, f"graphics/dashboard/{pathGraphic}.html")
 
-    elif kwargs.get('wmote_id'):
-        moteId = kwargs.get('wmote_id')
-        return returnGraphic(request, 'water', moteId)
-
-    else:
-        pass
