@@ -174,13 +174,14 @@ def createPlotly(arrayToPlotly, nameToFileCreate, pathToCreateFile):
 def addGraphicsInHTML(pathSearchArchives):
     searchHTMLFiles = glob.glob(
         f'{pathSearchArchives}/**/*.html', recursive=True)
+    
 
     arrayPathForIframes = []
     arrayNameForHTML = []
 
     for HTMLFile in searchHTMLFiles:
-        HTMLPath = os.path.basename(HTMLFile).replace('.html', '')
-        HTMLFileName = HTMLPath
+        HTMLPath = HTMLFile.replace('.html', '').replace('/', '-').replace('app-templates-graphics-dashboard-', 'graphic/')
+        HTMLFileName = os.path.basename(HTMLFile).replace('.html', '')
         arrayPathForIframes.append(f'/{HTMLPath}')
         arrayNameForHTML.append(HTMLFileName)
 
@@ -189,5 +190,6 @@ def addGraphicsInHTML(pathSearchArchives):
 
 def mainGraphics(datas, pathToCreateArchive, pathToSearchArquives, typeGraphic):
     datasInPd = addDatasInDatasPD(datas, typeGraphic)
-    dataFrame = createDataFrame(datasInPd, pathToCreateArchive)
-    return addGraphicsInHTML(pathToSearchArquives)
+    createDataFrame(datasInPd, pathToCreateArchive) 
+    graphics = addGraphicsInHTML(pathToSearchArquives)
+    return graphics

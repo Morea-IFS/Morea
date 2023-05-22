@@ -14,6 +14,9 @@ def dashboard(request):
     rawGraphics = mainGraphics(datasRaw, "app/templates/graphics/dashboard/rawDatas",
                                "app/templates/graphics/dashboard/rawDatas", "raw")
 
+    print(rawGraphics)
+
+
     return render(request, 'dashboard/dashboard.html', {
         'listPathsHTML': rawGraphics[0],
         'listNamesFilesHTML': rawGraphics[1]
@@ -55,28 +58,11 @@ def api(request):
     return render(request, 'api.html')
 
 
-def returnGraphic(request, typeMote, moteId):
-
-    if moteId < 10:
-        moteId = f'0{moteId}'
-
-    if typeMote == "energy":
-        return render(request, f'graphics/dashboard/rawDatas/energy/Emote{moteId}.html')
-    elif typeMote == "water":
-        return render(request, f'graphics/dashboard/rawDatas/water/Wmote{moteId}.html')
-    else:
-        pass
-
-
 def graphics(request, **kwargs):
 
-    if kwargs.get('emote_id'):
-        moteId = kwargs.get('emote_id')
-        return returnGraphic(request, 'energy', moteId)
+    requestPathGraphic = kwargs.get('path_graphic_mote')
+    pathGraphic = str(requestPathGraphic).replace('-', '/').replace('/em', '/Em').replace('/wm', '/Wm')
+    
+    
+    return render(request, f"graphics/dashboard/{pathGraphic}.html")
 
-    elif kwargs.get('wmote_id'):
-        moteId = kwargs.get('wmote_id')
-        return returnGraphic(request, 'water', moteId)
-
-    else:
-        pass

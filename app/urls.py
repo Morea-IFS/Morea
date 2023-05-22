@@ -8,6 +8,5 @@ urlpatterns = [
     path('novidades/', views.updates, name='updates'),
     path('sobre/', views.about, name='about'),
     path('api/', views.api, name='api'),
-    path('Emote<int:emote_id>', views.graphics, name='graphics'),
-    path('Wmote<int:wmote_id>', views.graphics, name='graphics')
+    path('graphic/<str:path_graphic_mote>', views.graphics, name='graphics'),
 ]

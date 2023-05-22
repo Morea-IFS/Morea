@@ -1,24 +1,35 @@
-const selectsElement = document.querySelectorAll(".titleDiv__selectElement");
-const arraySelectsElement = Array.from(selectsElement);
+const arraySelectsElement = Array.from(
+  document.querySelectorAll(".titleDiv__selectElement")
+);
 const iframes = Array.from(
   document.querySelectorAll(".graphicDiv_graphicIframe")
 );
+
+console.log(arraySelectsElement);
+
 const arrayIdsRawDatas = [];
+const arrayIds1h1MeanDatas = []
+
 
 iframes.map((iframe) => {
   arrayIdsRawDatas.push(iframe.id);
 });
- 
-arrayIdsRawDatas.map((id, index) => {
-  const option = document.createElement("option");
-  option.value = id;
-  option.textContent = id;
-  if (index === 0) {
-    console.log(id);
-    option.setAttribute("selected", true);
-  }
-  arraySelectsElement[1].appendChild(option);
-});
+
+
+const addOptions = (arrayForMap, elementSelect) => {
+  arrayForMap.map((id, index) => {
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = id;
+    if (index === 0) {
+      option.setAttribute("selected", true);
+    }
+    elementSelect.appendChild(option);
+  });
+}
+
+addOptions(arrayIdsRawDatas, arraySelectsElement[1])
+
 
 // DECLARAR ARRAY COM OS IDS PARA OS GRAFICOS DE DETERMINADO SLOT
 
