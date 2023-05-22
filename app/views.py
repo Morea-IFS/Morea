@@ -13,13 +13,13 @@ def dashboard(request):
 
     rawGraphics = mainGraphics(datasRaw, "app/templates/graphics/dashboard/rawDatas",
                                "app/templates/graphics/dashboard/rawDatas", "raw")
-
-    print(rawGraphics)
+    
+    mean1h1Graphics = addGraphicsInHTML("app/templates/graphics/dashboard/mean1h1")
 
 
     return render(request, 'dashboard/dashboard.html', {
-        'listPathsHTML': rawGraphics[0],
-        'listNamesFilesHTML': rawGraphics[1]
+        'listPathsHTML': {"raw": rawGraphics[0], "m1h1": mean1h1Graphics[0]},
+        'listNamesFilesHTML': {"raw": rawGraphics[1], "m1h1": mean1h1Graphics[1]}
     })
 
 

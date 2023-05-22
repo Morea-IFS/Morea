@@ -40,14 +40,37 @@
 
             <select class="titleDiv__selectElement" name="selectOverallAverage" id="selectOverallAverage">
               <option disabled selected>Selecione</option>
-              <option value="water">Água</option>
-              <option value="energy">Energia</option>
             </select>
 
           </div>
         </div>
         <div class="graphicsDiv__graphicDiv">
-          <p>Gráfico</p>
+          
+          {% for iframePath in listPathsHTML.m1h1 %}
+
+            {% if forloop.counter0 == 0 %}
+              <iframe 
+              class="graphicDiv_graphicIframeM1h1 disabledGraphic enableGraphic"
+              id="{{ listNamesFilesHTML.m1h1|index:forloop.counter0 }}"
+              src="{{ iframePath }}"
+              frameborder="0"
+              >
+              </iframe>
+              
+              {% else %}
+              
+              <iframe 
+              class="graphicDiv_graphicIframeM1h1 disabledGraphic"
+              id="{{ listNamesFilesHTML.m1h1|index:forloop.counter0 }}"
+              src="{{ iframePath }}"
+              frameborder="0"
+              >
+              </iframe>
+
+          {% endif %}
+  
+      {% endfor %}
+
         </div>
       </div>
 
@@ -66,12 +89,12 @@
         </div>
         <div class="graphicsDiv__graphicDiv">
 
-        {% for iframePath in listPathsHTML %}
+        {% for iframePath in listPathsHTML.raw %}
 
           {% if forloop.counter0 == 0 %}
             <iframe 
-            class="graphicDiv_graphicIframe disabledGraphic enableGraphic"
-            id="{{ listNamesFilesHTML|index:forloop.counter0 }}"
+            class="graphicDiv_graphicIframeRaw disabledGraphic enableGraphic"
+            id="{{ listNamesFilesHTML.raw|index:forloop.counter0 }}"
             src="{{ iframePath }}"
             frameborder="0"
             >
@@ -80,8 +103,8 @@
           {% else %}
             
             <iframe 
-            class="graphicDiv_graphicIframe disabledGraphic"
-            id="{{ listNamesFilesHTML|index:forloop.counter0 }}"
+            class="graphicDiv_graphicIframeRaw disabledGraphic"
+            id="{{ listNamesFilesHTML.raw|index:forloop.counter0 }}"
             src="{{ iframePath }}"
             frameborder="0"
             >

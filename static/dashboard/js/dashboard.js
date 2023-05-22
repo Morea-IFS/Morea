@@ -1,26 +1,35 @@
 const arraySelectsElement = Array.from(
   document.querySelectorAll(".titleDiv__selectElement")
 );
-const iframes = Array.from(
-  document.querySelectorAll(".graphicDiv_graphicIframe")
+
+const iframesRaw = Array.from(
+  document.querySelectorAll(".graphicDiv_graphicIframeRaw")
 );
 
-console.log(arraySelectsElement);
+const iframesM1h1 = Array.from(
+  document.querySelectorAll(".graphicDiv_graphicIframeM1h1")
+);
 
 const arrayIdsRawDatas = [];
-const arrayIds1h1MeanDatas = []
+const arrayIds1h1Datas = [];
+
+const addIdIframesInArray = (arrayIframes, arrayId) => {
+  arrayIframes.map((iframe) => {
+    arrayId.push(iframe.id);
+  });
+}
 
 
-iframes.map((iframe) => {
-  arrayIdsRawDatas.push(iframe.id);
-});
+addIdIframesInArray(iframesRaw, arrayIdsRawDatas)
+addIdIframesInArray(iframesM1h1, arrayIds1h1Datas)
 
 
 const addOptions = (arrayForMap, elementSelect) => {
   arrayForMap.map((id, index) => {
     const option = document.createElement("option");
+    const nameOption = id.split("-");
     option.value = id;
-    option.textContent = id;
+    option.textContent = nameOption[nameOption.length - 1];
     if (index === 0) {
       option.setAttribute("selected", true);
     }
@@ -28,6 +37,7 @@ const addOptions = (arrayForMap, elementSelect) => {
   });
 }
 
+addOptions(arrayIds1h1Datas, arraySelectsElement[0])
 addOptions(arrayIdsRawDatas, arraySelectsElement[1])
 
 
@@ -46,5 +56,6 @@ const toggleGraphic = (classArray, selectElement) => {
 };
 
 addEventListener("change", () => {
+  toggleGraphic(arrayIds1h1Datas, arraySelectsElement[0]);
   toggleGraphic(arrayIdsRawDatas, arraySelectsElement[1]);
 });

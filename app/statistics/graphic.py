@@ -181,7 +181,7 @@ def addGraphicsInHTML(pathSearchArchives):
 
     for HTMLFile in searchHTMLFiles:
         HTMLPath = HTMLFile.replace('.html', '').replace('/', '-').replace('app-templates-graphics-dashboard-', 'graphic/')
-        HTMLFileName = os.path.basename(HTMLFile).replace('.html', '')
+        HTMLFileName = HTMLPath.replace('graphic/', '')
         arrayPathForIframes.append(f'/{HTMLPath}')
         arrayNameForHTML.append(HTMLFileName)
 
