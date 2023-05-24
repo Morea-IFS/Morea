@@ -19,6 +19,8 @@ const addIdIframesInArray = (arrayIframes, arrayId) => {
   });
 }
 
+console.log(iframesRaw);
+
 
 addIdIframesInArray(iframesRaw, arrayIdsRawDatas)
 addIdIframesInArray(iframesM1h1, arrayIds1h1Datas)
